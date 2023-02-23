@@ -56,6 +56,9 @@ builder.Services.AddControllers().AddJsonOptions(opt =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCors(opt => opt.AddDefaultPolicy(p => {
+    p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+}));
 builder.Services.AddSwaggerGen(opt =>
 {
     opt.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
@@ -102,5 +105,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseCors(opt => opt.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
 app.Run();
