@@ -39,7 +39,7 @@ namespace Application.Features.Cars.Queries.GetList
                                                                         size: request.PageRequest.PageSize
                                                                              );
                 GetListResponse<GetListCarDto> response = _mapper.Map<GetListResponse<GetListCarDto>>(cars);
-
+                Thread.Sleep(500);
                 return response;
             }
         }

@@ -32,6 +32,7 @@ public class BaseDbContext : DbContext
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<UserEmailAuthenticator> UserEmailAuthenticators { get; set; }
     public DbSet<UserOtpAuthenticator> UserOtpAuthenticators { get; set; }
+    public DbSet<CarImage> CarImages { get; set; }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

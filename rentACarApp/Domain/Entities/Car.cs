@@ -19,12 +19,12 @@ public class Car:Entity
 
     public short MinFindeksCreditRate { get; set; }
 
-
+    public ICollection<CarImage> Images { get; set; }
     public virtual Model? Model { get; set; }
 
     public Car()
     {
-
+        Images = new HashSet<CarImage>();
     }
     public Car(int id, int modelId, int kilometer, short modelYear, string plate, short minFindeksCreditRate):this()
     {

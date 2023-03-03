@@ -14,7 +14,7 @@ using Freezone.Core.Application.Pipelines.Authorization;
 
 namespace Application.Features.Brands.Queries.GetList
 {
-    public class GetListBrandQuery:IRequest<GetListResponse<GetListBrandDto>>,ICachableRequest
+    public class GetListBrandQuery:IRequest<GetListResponse<GetListBrandDto>>
         //,ISecuredOperation
         // ISecuredOperation olmayan/korunmayan operasyonları anonim/login yapmamış kullanıcılarda kullanabilecek.
     {
@@ -42,6 +42,7 @@ namespace Application.Features.Brands.Queries.GetList
                 IPaginate<Brand> brands = await _brandRepository.GetListAsync(index: request.PageRequest.Page,
                                                                               size: request.PageRequest.PageSize);
                 GetListResponse<GetListBrandDto> response = _mapper.Map<GetListResponse<GetListBrandDto>>(brands);
+                Thread.Sleep(3000);
                 return response;
             }
         }
