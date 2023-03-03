@@ -1,4 +1,4 @@
-﻿using Freezone.Core.Security.Entities;
+using Freezone.Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,6 +19,10 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         int id = 0;
 
         #region FeatureOperationClaims
+        seed.Add(new OperationClaim { Id = ++id, Name = "CarImages.Create" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "CarImages.Delete" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "CarImages.Update" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "CarImages.Get" });
 
         #endregion
 

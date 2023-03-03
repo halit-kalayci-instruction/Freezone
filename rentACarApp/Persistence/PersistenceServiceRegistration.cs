@@ -1,4 +1,4 @@
-﻿using Application.Services.Repositories;
+using Application.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +33,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IUserEmailAuthenticatorRepository, UserEmailAuthenticatorRepository>();
         services.AddScoped<IUserOtpAuthenticatorRepository, UserOtpAuthenticatorRepository>();
 
+        services.AddScoped<ICarImageRepository, CarImageRepository>();
         return services;
     }
 }
