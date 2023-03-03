@@ -98,6 +98,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.ConfigureCustomExceptionMiddleware();
+// Statik dosyaları host edebilmemizi sağlar.
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
