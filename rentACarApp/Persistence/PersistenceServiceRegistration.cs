@@ -34,6 +34,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IUserOtpAuthenticatorRepository, UserOtpAuthenticatorRepository>();
 
         services.AddScoped<ICarImageRepository, CarImageRepository>();
+        services.AddScoped<ITransmissionRepository, TransmissionRepository>();
         return services;
     }
 }

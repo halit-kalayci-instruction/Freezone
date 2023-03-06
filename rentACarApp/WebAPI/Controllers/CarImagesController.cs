@@ -14,8 +14,13 @@ namespace WebAPI.Controllers;
 public class CarImagesController : BaseController
 {
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] CreateCarImageCommand createCarImageCommand)
+    public async Task<IActionResult> Add(IFormFile file, [FromQuery] int carId)
     {
+        CreateCarImageCommand createCarImageCommand = new CreateCarImageCommand()
+        {
+            File=file,
+            CarId = carId
+        };
         CreatedCarImageResponse response = await Mediator.Send(createCarImageCommand);
 
         return Created(uri: "", response);

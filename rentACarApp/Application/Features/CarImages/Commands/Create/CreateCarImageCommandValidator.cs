@@ -7,6 +7,5 @@ public class CreateCarImageCommandValidator : AbstractValidator<CreateCarImageCo
     public CreateCarImageCommandValidator()
     {
         RuleFor(c => c.CarId).NotEmpty();
-        RuleFor(c => c.Path).NotEmpty();
     }
 }
