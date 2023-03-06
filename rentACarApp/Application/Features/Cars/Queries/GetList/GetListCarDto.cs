@@ -1,4 +1,6 @@
-﻿using Domain.Enums;
+﻿using Application.Features.CarImages.Queries.GetList;
+using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.Features.Cars.Queries.GetList
 {
@@ -10,6 +12,8 @@ namespace Application.Features.Cars.Queries.GetList
         public string Plate { get; set; }
         public CarState CarState { get; set; }
         public int ModelYear { get; set; }
+        public List<GetListCarImageDto> Images { get; set; }
+        //public List<CarImage> Images { get; set; }
 
     }
 }
