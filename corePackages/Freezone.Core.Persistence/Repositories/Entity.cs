@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Freezone.Core.Persistence.Repositories;
 
+//TODO: Soft delete
 public class Entity
 {
     public int Id { get; set; }
