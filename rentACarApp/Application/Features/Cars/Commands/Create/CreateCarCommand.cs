@@ -1,8 +1,11 @@
-﻿using Application.Features.Cars.Rules;
+﻿using Application.Features.CarImages.Constants;
+using Application.Features.Cars.Constants;
+using Application.Features.Cars.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
+using Freezone.Core.Application.Pipelines.Authorization;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Cars.Commands.Create
 {
-    public class CreateCarCommand:IRequest<CreatedCarResponse>
+    public class CreateCarCommand:IRequest<CreatedCarResponse>,ISecuredOperation
     {
         public int ModelId { get; set; }
         public int Kilometer { get; set; }
@@ -21,6 +24,8 @@ namespace Application.Features.Cars.Commands.Create
         public short MinFindeksCreditRate { get; set; }
 
         public CarState CarState { get; set; }
+
+        public string[] Roles => new[] { CarRoles.Create };
 
         public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, CreatedCarResponse>
         {

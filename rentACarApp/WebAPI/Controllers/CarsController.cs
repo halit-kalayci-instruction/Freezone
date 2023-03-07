@@ -1,4 +1,6 @@
-﻿using Application.Features.Cars.Commands.Create;
+﻿using Application.Features.CarImages.Commands.Delete;
+using Application.Features.Cars.Commands.Create;
+using Application.Features.Cars.Commands.Delete;
 using Application.Features.Cars.Queries.GetList;
 using Application.Features.Cars.Queries.GetListByDynamic;
 using Freezone.Core.Application.Requests;
@@ -18,6 +20,14 @@ public class CarsController : BaseController
     {
         CreatedCarResponse response = await Mediator.Send(createCarCommand);
         return Created("", response);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        DeletedCarResponse response = await Mediator.Send(new DeleteCarCommand { Id = id });
+
+        return Ok(response);
     }
 
     [HttpGet]
