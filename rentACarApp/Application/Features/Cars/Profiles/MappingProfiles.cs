@@ -1,4 +1,5 @@
 ﻿using Application.Features.Cars.Commands.Create;
+using Application.Features.Cars.Commands.Delete;
 using Application.Features.Cars.Queries.GetList;
 using Application.Features.Cars.Queries.GetListByDynamic;
 using AutoMapper;
@@ -16,6 +17,7 @@ namespace Application.Features.Cars.Profiles
     {
         public MappingProfiles()
         {
+            CreateMap<Car, DeletedCarResponse>().ReverseMap();
             CreateMap<Car, CreatedCarResponse>().ReverseMap();
             CreateMap<Car, CreateCarCommand>().ReverseMap();
 

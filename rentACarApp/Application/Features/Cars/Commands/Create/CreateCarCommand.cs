@@ -25,7 +25,7 @@ namespace Application.Features.Cars.Commands.Create
 
         public CarState CarState { get; set; }
 
-        public string[] Roles => new[] { CarRoles.Create };
+        public string[] Roles => new[] { CarRoles.Create, CarRoles.Admin };
 
         public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, CreatedCarResponse>
         {

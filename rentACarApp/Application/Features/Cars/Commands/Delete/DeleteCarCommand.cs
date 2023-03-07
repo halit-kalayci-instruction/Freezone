@@ -21,7 +21,7 @@ namespace Application.Features.Cars.Commands.Delete
 
         public string CacheKey => "GetCar.List";
 
-        public string[] Roles => new[] {CarRoles.Delete};
+        public string[] Roles => new[] {CarRoles.Delete,CarRoles.Admin};
 
         public int Id { get; set; }
 
@@ -42,9 +42,8 @@ namespace Application.Features.Cars.Commands.Delete
             public async Task<DeletedCarResponse> Handle(DeleteCarCommand request, CancellationToken cancellationToken)
             {
                 Car car = await _carRepository.GetAsync(i => i.Id == request.Id);
-
-                // BUSINESS RULE : Araba varlığını kontrol et
-                // BUSINESS RULE : Araba stateini kontrol et
+                await _carBusinessRules.CarMustExists(car);
+                await _carBusinessRules.CarMustBeAvailable(car);
                 await _carRepository.DeleteAsync(car);
                 DeletedCarResponse response = _mapper.Map<DeletedCarResponse>(car);
                 return response;

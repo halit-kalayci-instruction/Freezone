@@ -1,4 +1,5 @@
 ﻿using Application.Services.Repositories;
+using Domain.Entities;
 using Freezone.Core.Application.Rules;
 using Freezone.Core.CrossCuttingConcerns.Exceptions;
 using System;
@@ -27,6 +28,15 @@ namespace Application.Features.Cars.Rules
                 throw new BusinessException("Each Model Can Contain Five Cars");
             }
 
+        }
+
+        public async Task CarMustExists(Car car)
+        {
+            if (car == null) throw new BusinessException("Can not find specified car");
+        }
+        public async Task CarMustBeAvailable(Car car)
+        {
+            if (car.CarState != Domain.Enums.CarState.Available) throw new BusinessException("This car is not available");
         }
     }
 }

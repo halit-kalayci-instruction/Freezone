@@ -8,6 +8,7 @@ namespace Application.Features.Cars.Constants
 {
     public static class CarRoles
     {
+        public const string Admin = "Admin";
         public const string Create = "Car.Create";
         public const string Delete = "Car.Delete";
 
