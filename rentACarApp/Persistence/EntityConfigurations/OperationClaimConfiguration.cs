@@ -27,6 +27,10 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         seed.Add(new OperationClaim { Id = ++id, Name = "Transmissions.Delete" });
         seed.Add(new OperationClaim { Id = ++id, Name = "Transmissions.Update" });
         seed.Add(new OperationClaim { Id = ++id, Name = "Transmissions.Get" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Create" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Delete" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Update" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Get" });
 
         #endregion
 

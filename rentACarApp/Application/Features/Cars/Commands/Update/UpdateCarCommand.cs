@@ -8,29 +8,31 @@ using Freezone.Core.Application.Pipelines.Authorization;
 using Freezone.Core.Application.Pipelines.Caching;
 using MediatR;
 
-namespace Application.Features.Cars.Commands.Create;
+namespace Application.Features.Cars.Commands.Update;
 
-public class CreateCarCommand : IRequest<CreatedCarResponse>, ISecuredOperation, ICacheRemoverRequest
+public class UpdateCarCommand : IRequest<UpdatedCarResponse>, ISecuredOperation, ICacheRemoverRequest
 {
+    public int Id { get; set; }
     public int ModelId { get; set; }
     public int Kilometer { get; set; }
     public short ModelYear { get; set; }
     public string Plate { get; set; }
     public CarState CarState { get; set; }
     public short MinFindeksCreditRate { get; set; }
-
-    public string[] Roles => new[] { CarsRoles.Create };
+    
+    
+        public string[] Roles => new string[] { CarsRoles.Update,CarsRoles.Admin };
 
     public bool BypassCache { get; }
     public string CacheKey => "GetListCar";
 
-    public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, CreatedCarResponse>
+    public class UpdateCarCommandHandler : IRequestHandler<UpdateCarCommand, UpdatedCarResponse>
     {
         private readonly IMapper _mapper;
         private readonly ICarRepository _carRepository;
         private readonly CarBusinessRules _carBusinessRules;
 
-        public CreateCarCommandHandler(IMapper mapper, ICarRepository carRepository,
+        public UpdateCarCommandHandler(IMapper mapper, ICarRepository carRepository,
                                          CarBusinessRules carBusinessRules)
         {
             _mapper = mapper;
@@ -38,13 +40,14 @@ public class CreateCarCommand : IRequest<CreatedCarResponse>, ISecuredOperation,
             _carBusinessRules = carBusinessRules;
         }
 
-        public async Task<CreatedCarResponse> Handle(CreateCarCommand request, CancellationToken cancellationToken)
+        public async Task<UpdatedCarResponse> Handle(UpdateCarCommand request, CancellationToken cancellationToken)
         {
-            Car mappedCar = _mapper.Map<Car>(request);
+            Car car = _carRepository.Get(b => b.Id == request.Id);
+            Car mappedCar = _mapper.Map(request, car);
 
-            _carRepository.Add(mappedCar);
+            _carRepository.Update(mappedCar);
 
-            CreatedCarResponse response = _mapper.Map<CreatedCarResponse>(mappedCar);
+            UpdatedCarResponse response = _mapper.Map<UpdatedCarResponse>(car);
             return response;
         }
     }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Freezone.Core.Persistence.Repositories;
 
 //TODO: Soft delete
+//TODO: Check UpdateDate 
 public class Entity
 {
     public int Id { get; set; }

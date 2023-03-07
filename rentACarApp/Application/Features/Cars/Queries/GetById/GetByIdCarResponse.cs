@@ -1,8 +1,8 @@
 using Domain.Enums;
 
-namespace Application.Features.Cars.Commands.Create;
+namespace Application.Features.Cars.Queries.GetById;
 
-public class CreatedCarResponse
+public class GetByIdCarResponse
 {
     public int Id { get; set; }
     public int ModelId { get; set; }

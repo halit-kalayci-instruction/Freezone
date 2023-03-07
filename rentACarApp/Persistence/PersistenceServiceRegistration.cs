@@ -35,6 +35,7 @@ public static class PersistenceServiceRegistration
 
         services.AddScoped<ICarImageRepository, CarImageRepository>();
         services.AddScoped<ITransmissionRepository, TransmissionRepository>();
+        services.AddScoped<ICarRepository, CarRepository>();
         return services;
     }
 }

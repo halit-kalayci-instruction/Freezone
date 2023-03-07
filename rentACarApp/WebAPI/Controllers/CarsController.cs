@@ -1,12 +1,10 @@
-﻿using Application.Features.CarImages.Commands.Delete;
 using Application.Features.Cars.Commands.Create;
 using Application.Features.Cars.Commands.Delete;
+using Application.Features.Cars.Commands.Update;
+using Application.Features.Cars.Queries.GetById;
 using Application.Features.Cars.Queries.GetList;
-using Application.Features.Cars.Queries.GetListByDynamic;
 using Freezone.Core.Application.Requests;
-using Freezone.Core.Persistence.Dynamic;
 using Freezone.Core.Persistence.Paging;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -16,10 +14,19 @@ namespace WebAPI.Controllers;
 public class CarsController : BaseController
 {
     [HttpPost]
-    public async Task<ActionResult> Add([FromBody] CreateCarCommand createCarCommand)
+    public async Task<IActionResult> Add([FromBody] CreateCarCommand createCarCommand)
     {
         CreatedCarResponse response = await Mediator.Send(createCarCommand);
-        return Created("", response);
+
+        return Created(uri: "", response);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdateCarCommand updateCarCommand)
+    {
+        UpdatedCarResponse response = await Mediator.Send(updateCarCommand);
+
+        return Ok(response);
     }
 
     [HttpDelete("{id}")]
@@ -30,18 +37,18 @@ public class CarsController : BaseController
         return Ok(response);
     }
 
-    [HttpGet]
-    public async Task<ActionResult> GetList([FromQuery]PageRequest pageRequest) 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById([FromRoute] int id)
     {
-        GetListResponse<GetListCarDto> result =  await Mediator.Send(new GetListCarQuery {PageRequest=pageRequest});
-        return Ok(result);
+        GetByIdCarResponse response = await Mediator.Send(new GetByIdCarQuery { Id = id });
+        return Ok(response);
     }
 
-    [HttpPost("GetList/ByDynamic")]
-    public async Task<ActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic=null)
+    [HttpGet]
+    public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
-        GetListCarByDynamicQuery getListCarByDynamicQuery = new() { PageRequest=pageRequest, Dynamic = dynamic};
-        GetListResponse<GetListCarByDynamicDto> result = await Mediator.Send(getListCarByDynamicQuery);
-        return Ok(result);
+        GetListCarQuery getListCarQuery = new() { PageRequest = pageRequest };
+        GetListResponse<GetListCarDto> response = await Mediator.Send(getListCarQuery);
+        return Ok(response);
     }
 }

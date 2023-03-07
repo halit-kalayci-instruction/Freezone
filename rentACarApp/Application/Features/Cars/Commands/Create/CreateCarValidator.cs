@@ -16,7 +16,6 @@ namespace Application.Features.Cars.Commands.Create
             RuleFor(c=>c.MinFindeksCreditRate).GreaterThanOrEqualTo((short)0).LessThanOrEqualTo((short)1900);
             RuleFor(c=>c.Plate).NotEmpty().Must(CarCustomValidationRules.IsTurkeyPlate)
                 .WithMessage("Plate is not a turkish plate");
-
         }
     }
 }

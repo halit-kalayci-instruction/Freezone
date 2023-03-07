@@ -1,5 +1,7 @@
 ﻿using Application.Features.Cars.Commands.Create;
 using Application.Features.Cars.Commands.Delete;
+using Application.Features.Cars.Commands.Update;
+using Application.Features.Cars.Queries.GetById;
 using Application.Features.Cars.Queries.GetList;
 using Application.Features.Cars.Queries.GetListByDynamic;
 using AutoMapper;
@@ -20,6 +22,9 @@ namespace Application.Features.Cars.Profiles
             CreateMap<Car, DeletedCarResponse>().ReverseMap();
             CreateMap<Car, CreatedCarResponse>().ReverseMap();
             CreateMap<Car, CreateCarCommand>().ReverseMap();
+            CreateMap<Car, UpdatedCarResponse>().ReverseMap();
+            CreateMap<Car, UpdateCarCommand>().ReverseMap();
+            CreateMap<GetByIdCarResponse, Car>().ReverseMap();
 
             CreateMap<Car, GetListCarDto>().ForMember(c=>c.ModelName, opt=>opt.MapFrom(c=>c.Model.Name))
                                            .ForMember(c => c.BrandName, opt => opt.MapFrom(c => c.Model.Brand.Name)).ReverseMap();
