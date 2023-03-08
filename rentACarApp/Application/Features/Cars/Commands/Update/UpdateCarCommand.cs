@@ -45,7 +45,7 @@ public class UpdateCarCommand : IRequest<UpdatedCarResponse>, ISecuredOperation,
             Car car = _carRepository.Get(b => b.Id == request.Id);
             Car mappedCar = _mapper.Map(request, car);
 
-            _carRepository.Update(mappedCar);
+            await _carRepository.UpdateAsync(mappedCar);
 
             UpdatedCarResponse response = _mapper.Map<UpdatedCarResponse>(car);
             return response;

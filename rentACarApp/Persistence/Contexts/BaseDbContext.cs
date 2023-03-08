@@ -45,11 +45,28 @@ public class BaseDbContext : DbContext
             _ = data.State switch
             {
                 EntityState.Added=> data.Entity.CreatedDate = DateTime.UtcNow,
-                EntityState.Modified=>data.Entity.UpdatedDate= DateTime.UtcNow
+                EntityState.Modified=> data.Entity.UpdatedDate= DateTime.UtcNow
             };
         }
 
         return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    public override int SaveChanges()
+    {
+        IEnumerable<EntityEntry<Entity>> datas = ChangeTracker.Entries<Entity>()
+           .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+        foreach (var data in datas)
+        {
+            _ = data.State switch
+            {
+                EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,
+                EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow
+            };
+        }
+
+        return base.SaveChanges();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
