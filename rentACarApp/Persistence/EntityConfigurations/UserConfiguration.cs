@@ -16,7 +16,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(p => p.Email).HasColumnName("Email");
         builder.Property(p => p.PasswordHash).HasColumnName("PasswordHash");
         builder.Property(p => p.PasswordSalt).HasColumnName("PasswordSalt");
-        builder.Property(p => p.Status).HasColumnName("Status");
+        builder.Property(p => p.UserStatus).HasColumnName("UserStatus");
 
         builder.HasIndex(p => p.Email, "UK_Users_Email").IsUnique();
     }

@@ -42,7 +42,7 @@ public class RegisterCommand : IRequest<RegisteredResponse>
             User newUser = _mapper.Map<User>(request.UserForRegisterDto);
             newUser.PasswordHash = passwordHash;
             newUser.PasswordSalt = passwordSalt;
-            newUser.Status = true;
+            newUser.UserStatus = true;
             await _userRepository.AddAsync(newUser);
 
             // Generate AccessToken

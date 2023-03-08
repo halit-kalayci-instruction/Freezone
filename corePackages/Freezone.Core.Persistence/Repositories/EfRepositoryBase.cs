@@ -92,10 +92,29 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         await Context.SaveChangesAsync();
         return entityList;
     }
-
+    public TEntity Delete(TEntity entity)
+    {
+        //Context.Entry(entity).State = EntityState.Deleted;
+        Context.Entry(entity).Entity.Status = 0;
+        Context.Entry(entity).State = EntityState.Modified;
+        Context.SaveChanges();
+        return entity;
+    }
+    public List<TEntity> DeleteRange(List<TEntity> entity)
+    {
+        //Context.RemoveRange(entity);
+        foreach (var item in entity)
+        {
+            Context.Entry(item).Entity.Status = 0;
+            Context.Entry(item).State = EntityState.Modified;
+        }
+        Context.SaveChanges();
+        return entity;
+    }
     public async Task<TEntity> DeleteAsync(TEntity entity)
     {
-        Context.Entry(entity).State = EntityState.Deleted;
+        Context.Entry(entity).Entity.Status = 0;
+        Context.Entry(entity).State = EntityState.Modified;
         await Context.SaveChangesAsync();
         return entity;
     }
@@ -103,7 +122,8 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
     {
         foreach (TEntity entityItem in entity)
         {
-            Context.Entry(entityItem).State = EntityState.Deleted;
+            Context.Entry(entityItem).Entity.Status = 0;
+            Context.Entry(entityItem).State = EntityState.Modified;
         }
         await Context.SaveChangesAsync();
         return entity;
@@ -169,18 +189,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return entity;
     }
 
-    public TEntity Delete(TEntity entity)
-    {
-        Context.Entry(entity).State = EntityState.Deleted;
-        Context.SaveChanges();
-        return entity;
-    }
-    public List<TEntity> DeleteRange(List<TEntity> entity)
-    {
-        Context.RemoveRange(entity);
-        Context.SaveChanges();
-        return entity;
-    }
+  
 
 
 }

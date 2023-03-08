@@ -11,7 +11,7 @@ public class User:Entity
     public byte[] PasswordSalt { get; set; } // iMDuNue7EvE3 (byte[])
     public byte[] PasswordHash { get; set; } //  123456789ASD! (byte[])
     public AuthenticatorType AuthenticatorType { get; set; }
-    public bool Status { get; set; }
+    public bool UserStatus { get; set; }
 
     public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; }
     public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
