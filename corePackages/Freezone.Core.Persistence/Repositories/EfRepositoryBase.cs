@@ -20,7 +20,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
                                          IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = true,
                                          CancellationToken cancellationToken = default)
     {
-        IQueryable<TEntity> queryable = Query().AsQueryable();
+        IQueryable<TEntity> queryable = Query().Where(i=>i.Status != 0).AsQueryable();
         if (!enableTracking) queryable = queryable.AsNoTracking();
         if (include != null) queryable = include(queryable);
         return await queryable.FirstOrDefaultAsync(predicate, cancellationToken);
@@ -33,7 +33,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
                                                        int index = 0, int size = 10, bool enableTracking = true,
                                                        CancellationToken cancellationToken = default)
     {
-        IQueryable<TEntity> queryable = Query();
+        IQueryable<TEntity> queryable = Query().Where(i => i.Status != 0);
         if (!enableTracking) queryable = queryable.AsNoTracking();
         if (include != null) queryable = include(queryable);
         if (predicate != null) queryable = queryable.Where(predicate);
@@ -50,7 +50,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
                                                                 bool enableTracking = true,
                                                                 CancellationToken cancellationToken = default)
     {
-        IQueryable<TEntity> queryable = Query().AsQueryable().ToDynamic(dynamic);
+        IQueryable<TEntity> queryable = Query().Where(i => i.Status != 0).AsQueryable().ToDynamic(dynamic);
         if (!enableTracking) queryable = queryable.AsNoTracking();
         if (include != null) queryable = include(queryable);
         return await queryable.ToPaginateAsync(index, size, 0, cancellationToken);
@@ -132,7 +132,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
     public TEntity Get(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>,
                        IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = true)
     {
-        IQueryable<TEntity> queryable = Query().AsQueryable();
+        IQueryable<TEntity> queryable = Query().Where(i => i.Status != 0).AsQueryable();
         if (!enableTracking) queryable = queryable.AsNoTracking();
         if (include != null) queryable = include(queryable);
         return queryable.FirstOrDefault(predicate);
@@ -143,7 +143,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
                                       int index = 0, int size = 10,
                                       bool enableTracking = true)
     {
-        IQueryable<TEntity> queryable = Query();
+        IQueryable<TEntity> queryable = Query().Where(i => i.Status != 0);
         if (!enableTracking) queryable = queryable.AsNoTracking();
         if (include != null) queryable = include(queryable);
         if (predicate != null) queryable = queryable.Where(predicate);
@@ -157,7 +157,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
                                                    include = null, int index = 0, int size = 10,
                                                bool enableTracking = true)
     {
-        IQueryable<TEntity> queryable = Query().AsQueryable().ToDynamic(dynamic);
+        IQueryable<TEntity> queryable = Query().Where(i => i.Status != 0).AsQueryable().ToDynamic(dynamic);
         if (!enableTracking) queryable = queryable.AsNoTracking();
         if (include != null) queryable = include(queryable);
         return queryable.ToPaginate(index, size);
