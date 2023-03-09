@@ -10,6 +10,8 @@ namespace Application.Features.Cars.Queries.GetList
         public string BrandName { get; set; }
         public int Kilometer { get; set; }
         public string ModelName { get; set; }
+        public int ModelId { get; set; }
+
         public short MinFindeksCreditRate { get; set; }
 
         public string Plate { get; set; }

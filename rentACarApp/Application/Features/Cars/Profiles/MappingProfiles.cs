@@ -27,7 +27,9 @@ namespace Application.Features.Cars.Profiles
             CreateMap<GetByIdCarResponse, Car>().ReverseMap();
 
             CreateMap<Car, GetListCarDto>().ForMember(c=>c.ModelName, opt=>opt.MapFrom(c=>c.Model.Name))
-                                           .ForMember(c => c.BrandName, opt => opt.MapFrom(c => c.Model.Brand.Name)).ReverseMap();
+                                           .ForMember(c => c.BrandName, opt => opt.MapFrom(c => c.Model.Brand.Name))
+                                           .ForMember(c=>c.ModelId, opt=>opt.MapFrom(c=>c.Model.Id))
+                                           .ReverseMap();
 
 
             CreateMap<IPaginate<Car>, GetListResponse<GetListCarDto>>().ReverseMap();
