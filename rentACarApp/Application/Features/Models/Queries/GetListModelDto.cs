@@ -10,6 +10,7 @@ public class GetListModelDto
 {
     public int Id { get; set; }
     public string BrandName { get; set; }
+    public int BrandId { get; set; }
     public string FuelName { get; set; }
     public string TransmissionName { get; set; }
     public string Name { get; set; }

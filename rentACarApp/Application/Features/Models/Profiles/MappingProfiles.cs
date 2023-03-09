@@ -15,6 +15,7 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<Model, GetListModelDto>().ForMember(c => c.BrandName, opt => opt.MapFrom(c => c.Brand.Name))
+                                        .ForMember(c => c.BrandId, opt => opt.MapFrom(c => c.Brand.Id))
                                         .ForMember(c => c.FuelName, opt => opt.MapFrom(c => c.Fuel.Name))
                                         .ForMember(c => c.TransmissionName,
                                                    opt => opt.MapFrom(c => c.Transmission.Name));

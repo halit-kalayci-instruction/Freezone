@@ -42,7 +42,7 @@ namespace Application.Features.Brands.Queries.GetList
                 IPaginate<Brand> brands = await _brandRepository.GetListAsync(index: request.PageRequest.Page,
                                                                               size: request.PageRequest.PageSize);
                 GetListResponse<GetListBrandDto> response = _mapper.Map<GetListResponse<GetListBrandDto>>(brands);
-                Thread.Sleep(3000);
+                
                 return response;
             }
         }
