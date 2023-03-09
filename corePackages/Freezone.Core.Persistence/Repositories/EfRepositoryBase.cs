@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Freezone.Core.Persistence.Paging;
 using Freezone.Core.Persistence.Dynamic;
+using System.Drawing;
 
 namespace Freezone.Core.Persistence.Repositories;
 
@@ -137,6 +138,28 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         if (include != null) queryable = include(queryable);
         return queryable.FirstOrDefault(predicate);
     }
+
+    public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = true)
+    {
+        IQueryable<TEntity> queryable = Query().Where(i => i.Status != 0);
+        if (!enableTracking) queryable = queryable.AsNoTracking();
+        if (include != null) queryable = include(queryable);
+        if (predicate != null) queryable = queryable.Where(predicate);
+        if (orderBy != null)
+            return orderBy(queryable);
+        return queryable.ToList();
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = true, CancellationToken cancellationToken = default)
+    {
+        IQueryable<TEntity> queryable = Query().Where(i => i.Status != 0);
+        if (!enableTracking) queryable = queryable.AsNoTracking();
+        if (include != null) queryable = include(queryable);
+        if (predicate != null) queryable = queryable.Where(predicate);
+        if (orderBy != null)
+            return await orderBy(queryable).ToListAsync();
+        return await queryable.ToListAsync();
+    }
     public IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null,
                                       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
                                       Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
@@ -190,6 +213,4 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
     }
 
   
-
-
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Features.Brands.Commands.Create;
+using Application.Features.Brands.Queries.GetAll;
 using Application.Features.Brands.Queries.GetById;
 using Application.Features.Brands.Queries.GetList;
 using Freezone.Core.Application.Requests;
@@ -32,6 +33,13 @@ namespace WebAPI.Controllers
         {
             GetListBrandQuery getListBrandQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListBrandDto> response = await Mediator.Send(getListBrandQuery);
+            return Ok(response);
+        }
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            GetAllBrandQuery getListBrandQuery = new();
+            IEnumerable<GetAllBrandDto> response = await Mediator.Send(getListBrandQuery);
             return Ok(response);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Application.Features.Brands.Commands.Create;
+using Application.Features.Brands.Queries.GetAll;
 using Application.Features.Brands.Queries.GetById;
 using Application.Features.Brands.Queries.GetList;
 using AutoMapper;
@@ -20,6 +21,7 @@ namespace Application.Features.Brands.Profiles
             CreateMap<Brand, CreatedBrandResponse>().ReverseMap();
             CreateMap<Brand, GetByIdBrandResponse>().ReverseMap();
             CreateMap<Brand, GetListBrandDto>().ReverseMap();
+            CreateMap<Brand, GetAllBrandDto>().ReverseMap();
             CreateMap<IPaginate<Brand>, GetListResponse<GetListBrandDto>>().ReverseMap();
         }
     }
