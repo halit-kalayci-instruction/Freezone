@@ -24,7 +24,9 @@ namespace Application.Features.Cars.Profiles
             CreateMap<Car, CreateCarCommand>().ReverseMap();
             CreateMap<Car, UpdatedCarResponse>().ReverseMap();
             CreateMap<Car, UpdateCarCommand>().ReverseMap();
-            CreateMap<GetByIdCarResponse, Car>().ReverseMap();
+            CreateMap<Car, GetByIdCarQuery>().ReverseMap();
+            CreateMap<Car, GetByIdCarResponse>().ForMember(c=>c.BrandId, opt=>opt.MapFrom(c=>c.Model.BrandId)).ReverseMap();
+
 
             CreateMap<Car, GetListCarDto>().ForMember(c=>c.ModelName, opt=>opt.MapFrom(c=>c.Model.Name))
                                            .ForMember(c => c.BrandName, opt => opt.MapFrom(c => c.Model.Brand.Name))
