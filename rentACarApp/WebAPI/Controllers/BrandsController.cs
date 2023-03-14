@@ -1,7 +1,9 @@
 ﻿using Application.Features.Brands.Commands.Create;
+using Application.Features.Brands.Commands.Delete;
 using Application.Features.Brands.Queries.GetAll;
 using Application.Features.Brands.Queries.GetById;
 using Application.Features.Brands.Queries.GetList;
+using Application.Features.Cars.Commands.Delete;
 using Freezone.Core.Application.Requests;
 using Freezone.Core.Persistence.Paging;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +27,14 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetById([FromRoute] int id) 
         {
             GetByIdBrandResponse response = await Mediator.Send(new GetByIdBrandQuery {Id=id });
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            DeletedBrandResponse response = await Mediator.Send(new DeleteBrandCommand { Id = id });
+
             return Ok(response);
         }
 
