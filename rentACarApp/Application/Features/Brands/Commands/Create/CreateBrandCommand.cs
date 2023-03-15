@@ -27,9 +27,9 @@ public class CreateBrandCommand:IRequest<CreatedBrandResponse>,ILoggableRequest,
     public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, CreatedBrandResponse>
     {
 
-        IMapper _mapper;
-        IBrandRepository _brandRepository;
-        BrandBusinessRules _brandBusinessRules;
+        private readonly IMapper _mapper;
+        private readonly IBrandRepository _brandRepository;
+        private readonly BrandBusinessRules _brandBusinessRules;
 
         public CreateBrandCommandHandler(IMapper mapper, IBrandRepository brandRepository, BrandBusinessRules brandBusinessRules)
         {
