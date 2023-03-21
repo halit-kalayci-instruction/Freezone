@@ -59,7 +59,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
 
     public IQueryable<TEntity> Query()
     {
-        return Context.Set<TEntity>();
+        return Context.Set<TEntity>().Where(i=>i.Status != 0);
     }
 
     public async Task<TEntity> AddAsync(TEntity entity)

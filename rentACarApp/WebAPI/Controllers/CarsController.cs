@@ -3,7 +3,9 @@ using Application.Features.Cars.Commands.Delete;
 using Application.Features.Cars.Commands.Update;
 using Application.Features.Cars.Queries.GetById;
 using Application.Features.Cars.Queries.GetList;
+using Application.Features.Cars.Queries.GetListByDynamic;
 using Freezone.Core.Application.Requests;
+using Freezone.Core.Persistence.Dynamic;
 using Freezone.Core.Persistence.Paging;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +51,25 @@ public class CarsController : BaseController
     {
         GetListCarQuery getListCarQuery = new() { PageRequest = pageRequest };
         GetListResponse<GetListCarDto> response = await Mediator.Send(getListCarQuery);
+        return Ok(response);
+    }
+
+//  {
+//  "sort": [{"field":"id","dir":"desc"}],
+//  "filter": {
+//    "field": "Kilometer",
+//    "operator": "gt",
+//    "value": "6500",
+//    "logic":"or",
+//    "filters":[ {"field":"ModelYear", "operator":"eq", "value":"2022"} ]
+//  }
+//}
+
+    [HttpPost("GetList/ByDynamic")]
+    public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic? dynamic=null)
+    {
+        GetListCarByDynamicQuery query = new() { PageRequest= pageRequest, Dynamic = dynamic };
+        GetListResponse<GetListCarByDynamicDto> response = await Mediator.Send(query);
         return Ok(response);
     }
 }
