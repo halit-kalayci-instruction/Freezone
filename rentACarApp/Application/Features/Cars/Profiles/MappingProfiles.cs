@@ -37,6 +37,8 @@ namespace Application.Features.Cars.Profiles
             CreateMap<IPaginate<Car>, GetListResponse<GetListCarDto>>().ReverseMap();
 
             CreateMap<Car, GetListCarByDynamicDto>().ForMember(c => c.ModelName, opt => opt.MapFrom(c => c.Model.Name))
+                                            .ForMember(c => c.BrandId, opt => opt.MapFrom(c => c.Model.BrandId))
+                                            .ForMember(c => c.ModelId, opt => opt.MapFrom(c => c.Model.Id))
                                            .ForMember(c => c.BrandName, opt => opt.MapFrom(c => c.Model.Brand.Name)).ReverseMap();
 
 
