@@ -54,16 +54,16 @@ public class CarsController : BaseController
         return Ok(response);
     }
 
-//  {
-//  "sort": [{"field":"id","dir":"desc"}],
-//  "filter": {
-//    "field": "Kilometer",
-//    "operator": "gt",
-//    "value": "6500",
-//    "logic":"or",
-//    "filters":[ {"field":"ModelYear", "operator":"eq", "value":"2022"} ]
-//  }
-//}
+    //  {
+    //  "sort": [{"field":"id","dir":"desc"}],
+    //  "filter": {
+    //    "field": "Kilometer",
+    //    "operator": "gt",
+    //    "value": "6500",
+    //    "logic":"or",
+    //    "filters":[ {"field":"ModelYear", "operator":"eq", "value":"2022"} ]
+    //  }
+    //}
 
     [HttpPost("GetList/ByDynamic")]
     public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic? dynamic=null)

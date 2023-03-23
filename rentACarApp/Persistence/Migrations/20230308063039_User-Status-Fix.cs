@@ -18,6 +18,7 @@ namespace Persistence.Migrations
                 oldClrType: typeof(bool),
                 oldType: "bit");
 
+
             migrationBuilder.AddColumn<bool>(
                 name: "UserStatus",
                 table: "Users",

@@ -16,7 +16,8 @@ namespace Persistence.Contexts;
 public class BaseDbContext : DbContext
 {
     protected IConfiguration Configuration { get; set; }
-    public DbSet<Car> Cars { get; set; }
+    public DbSet<TitleDefiniton> TitleDefinitons { get; set; }
+
     public BaseDbContext(DbContextOptions dbContextOptions,
         IConfiguration configuration) : base(dbContextOptions)
     {
@@ -34,6 +35,12 @@ public class BaseDbContext : DbContext
     public DbSet<UserEmailAuthenticator> UserEmailAuthenticators { get; set; }
     public DbSet<UserOtpAuthenticator> UserOtpAuthenticators { get; set; }
     public DbSet<CarImage> CarImages { get; set; }
+    public DbSet<GroupTreeContentOperationClaim> GroupTreeContentOperationClaims { get; set; }
+    public DbSet<TitleOperationClaim> TitleOperationClaims{ get; set; }
+    public DbSet<UserTitleDefiniton> UserTitleDefinitons { get; set; }
+    public DbSet<GroupTreeContent> GroupTreeContents { get; set; }
+    public DbSet<Car> Cars { get; set; }
+
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
