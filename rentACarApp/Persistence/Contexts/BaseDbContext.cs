@@ -16,6 +16,7 @@ namespace Persistence.Contexts;
 public class BaseDbContext : DbContext
 {
     protected IConfiguration Configuration { get; set; }
+    public DbSet<UserTitleDefiniton> UserTitleDefinitons { get; set; }
     public DbSet<TitleDefiniton> TitleDefinitons { get; set; }
 
     public BaseDbContext(DbContextOptions dbContextOptions,

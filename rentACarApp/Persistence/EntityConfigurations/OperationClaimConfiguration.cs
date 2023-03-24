@@ -39,7 +39,6 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         seed.Add(new OperationClaim { Id = ++id, Name = "TitleDefinitons.Delete" });
         seed.Add(new OperationClaim { Id = ++id, Name = "TitleDefinitons.Update" });
         seed.Add(new OperationClaim { Id = ++id, Name = "TitleDefinitons.Get" });
-
         #endregion
 
         builder.HasData(seed);
