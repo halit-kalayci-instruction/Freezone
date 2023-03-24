@@ -5,7 +5,7 @@ using Persistence.Contexts;
 
 namespace Persistence.Repositories;
 
-public class TitleDefinitonRepository : EfRepositoryBase<TitleDefiniton, BaseDbContext>, ITitleDefinitonRepository
+public class TitleDefinitonRepository : EfRepositoryBase<TitleDefinition, BaseDbContext>, ITitleDefinitonRepository
 {
     public TitleDefinitonRepository(BaseDbContext context) : base(context)
     {

@@ -27,7 +27,7 @@ public class GetListTitleDefinitonQuery : IRequest<GetListResponse<GetListTitleD
         public async Task<GetListResponse<GetListTitleDefinitonDto>> Handle(GetListTitleDefinitonQuery request,
                                                                    CancellationToken cancellationToken)
         {
-            IPaginate<TitleDefiniton> titleDefinitons = await _titleDefinitonRepository.GetListAsync(index: request.PageRequest.Page,
+            IPaginate<TitleDefinition> titleDefinitons = await _titleDefinitonRepository.GetListAsync(index: request.PageRequest.Page,
                                                                           size: request.PageRequest.PageSize);
             GetListResponse<GetListTitleDefinitonDto> response = _mapper.Map<GetListResponse<GetListTitleDefinitonDto>>(titleDefinitons);
             return response;

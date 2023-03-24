@@ -1,4 +1,5 @@
 ﻿using Application.Services.Repositories;
+using Domain.Entities;
 using Freezone.Core.CrossCuttingConcerns.Exceptions;
 using Freezone.Core.Mailing;
 using Freezone.Core.Security.Authenticator;
@@ -6,6 +7,7 @@ using Freezone.Core.Security.Authenticator.Email;
 using Freezone.Core.Security.Authenticator.Otp;
 using Freezone.Core.Security.Entities;
 using Freezone.Core.Security.JWT;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services.AuthService;
 
@@ -19,14 +21,16 @@ public class AuthService : IAuthService
     private readonly IMailService _mailService;
     private readonly IOtpAuthenticatorHelper _otpAuthenticatorHelper;
     private readonly IUserOtpAuthenticatorRepository _userOtpAuthenticatorRepository;
+    private readonly IUserTitleDefinitonRepository _userTitleDefinitonRepository;
+    private readonly ITitleOperationClaimRepository _titleOperationClaimRepository;
 
     public AuthService(IUserOperationClaimRepository userOperationClaimRepository, ITokenHelper tokenHelper,
                        IRefreshTokenRepository refreshTokenRepository,
                        IEmailAuthenticatorHelper emailAuthenticatorHelper,
                        IUserEmailAuthenticatorRepository userEmailAuthenticatorRepository,
-                       IMailService mailService, 
+                       IMailService mailService,
                        IOtpAuthenticatorHelper otpAuthenticatorHelper,
-                       IUserOtpAuthenticatorRepository userOtpAuthenticatorRepository)
+                       IUserOtpAuthenticatorRepository userOtpAuthenticatorRepository, IUserTitleDefinitonRepository userTitleDefinitonRepository, ITitleOperationClaimRepository titleOperationClaimRepository)
     {
         _userOperationClaimRepository = userOperationClaimRepository;
         _tokenHelper = tokenHelper;
@@ -36,12 +40,28 @@ public class AuthService : IAuthService
         _mailService = mailService;
         _otpAuthenticatorHelper = otpAuthenticatorHelper;
         _userOtpAuthenticatorRepository = userOtpAuthenticatorRepository;
+        _userTitleDefinitonRepository = userTitleDefinitonRepository;
+        _titleOperationClaimRepository = titleOperationClaimRepository;
     }
 
+    // TODO: Refactor to 1 or 2 query
     public async Task<AccessToken> CreateAccessToken(User user)
     {
         ICollection<OperationClaim> operationClaims =
             await _userOperationClaimRepository.GetOperationClaimsByUserIdAsync(user.Id);
+
+        IEnumerable<UserTitleDefiniton> userTitles = await _userTitleDefinitonRepository.GetAllAsync(i => i.UserId == user.Id);
+        List<int> titleIDs = userTitles.Select(i => i.HrTitleDefinitonId).ToList();
+
+        IEnumerable<TitleOperationClaim> titleOperationClaims = await _titleOperationClaimRepository
+            .GetAllAsync(i => titleIDs.Contains(i.TitleDefinitionId),include:i=>i.Include(i=>i.OperationClaim));
+
+        List<OperationClaim> claimsFromTitles = titleOperationClaims.Select(i => i.OperationClaim).ToList();
+        foreach (OperationClaim operationClaim in claimsFromTitles)
+        {
+            if (!operationClaims.Any(i => i.Name == operationClaim.Name))
+                operationClaims.Add(operationClaim);
+        }
         AccessToken accessToken = _tokenHelper.CreateToken(user, operationClaims);
         return accessToken;
     }

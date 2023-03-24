@@ -31,14 +31,6 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Delete" });
         seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Update" });
         seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Get" });
-        seed.Add(new OperationClaim { Id = ++id, Name = "GroupTreeContents.Create" });
-        seed.Add(new OperationClaim { Id = ++id, Name = "GroupTreeContents.Delete" });
-        seed.Add(new OperationClaim { Id = ++id, Name = "GroupTreeContents.Update" });
-        seed.Add(new OperationClaim { Id = ++id, Name = "GroupTreeContents.Get" });
-        seed.Add(new OperationClaim { Id = ++id, Name = "TitleDefinitons.Create" });
-        seed.Add(new OperationClaim { Id = ++id, Name = "TitleDefinitons.Delete" });
-        seed.Add(new OperationClaim { Id = ++id, Name = "TitleDefinitons.Update" });
-        seed.Add(new OperationClaim { Id = ++id, Name = "TitleDefinitons.Get" });
         #endregion
 
         builder.HasData(seed);

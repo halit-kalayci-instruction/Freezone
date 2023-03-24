@@ -10,10 +10,9 @@ namespace Domain.Entities
 {
     public class UserTitleDefiniton : Entity
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public int HrTitleDefinitonId { get; set; }
         public virtual User User { get; set; }
-        public virtual TitleDefiniton HrTitleDefiniton { get; set; }
+        public virtual TitleDefinition HrTitleDefiniton { get; set; }
     }
 }

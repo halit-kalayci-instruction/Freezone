@@ -17,7 +17,7 @@ public class BaseDbContext : DbContext
 {
     protected IConfiguration Configuration { get; set; }
     public DbSet<UserTitleDefiniton> UserTitleDefinitons { get; set; }
-    public DbSet<TitleDefiniton> TitleDefinitons { get; set; }
+    public DbSet<TitleDefinition> TitleDefinitons { get; set; }
 
     public BaseDbContext(DbContextOptions dbContextOptions,
         IConfiguration configuration) : base(dbContextOptions)
@@ -38,7 +38,6 @@ public class BaseDbContext : DbContext
     public DbSet<CarImage> CarImages { get; set; }
     public DbSet<GroupTreeContentOperationClaim> GroupTreeContentOperationClaims { get; set; }
     public DbSet<TitleOperationClaim> TitleOperationClaims{ get; set; }
-    public DbSet<UserTitleDefiniton> UserTitleDefinitons { get; set; }
     public DbSet<GroupTreeContent> GroupTreeContents { get; set; }
     public DbSet<Car> Cars { get; set; }
 

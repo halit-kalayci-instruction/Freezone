@@ -11,7 +11,6 @@ namespace Application.Features.UserTitleDefinitons.Commands.Update;
 public class UpdateUserTitleDefinitonCommand : IRequest<UpdatedUserTitleDefinitonResponse>, ISecuredOperation
 {
     public int Id { get; set; }
-    public int Id { get; set; }
     public int UserId { get; set; }
     public int HrTitleDefinitonId { get; set; }
     

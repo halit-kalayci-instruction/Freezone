@@ -6,7 +6,6 @@ public class CreateUserTitleDefinitonCommandValidator : AbstractValidator<Create
 {
     public CreateUserTitleDefinitonCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty();
         RuleFor(c => c.UserId).NotEmpty();
         RuleFor(c => c.HrTitleDefinitonId).NotEmpty();
     }

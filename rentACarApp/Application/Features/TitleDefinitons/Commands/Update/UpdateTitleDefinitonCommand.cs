@@ -29,8 +29,8 @@ public class UpdateTitleDefinitonCommand : IRequest<UpdatedTitleDefinitonRespons
 
         public async Task<UpdatedTitleDefinitonResponse> Handle(UpdateTitleDefinitonCommand request, CancellationToken cancellationToken)
         {
-            TitleDefiniton titleDefiniton = _titleDefinitonRepository.Get(b => b.Id == request.Id);
-            TitleDefiniton mappedTitleDefiniton = _mapper.Map(request, titleDefiniton);
+            TitleDefinition titleDefiniton = _titleDefinitonRepository.Get(b => b.Id == request.Id);
+            TitleDefinition mappedTitleDefiniton = _mapper.Map(request, titleDefiniton);
 
             _titleDefinitonRepository.Update(mappedTitleDefiniton);
 

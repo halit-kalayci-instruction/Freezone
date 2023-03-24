@@ -27,7 +27,7 @@ public class CreateTitleDefinitonCommand : IRequest<CreatedTitleDefinitonRespons
 
         public async Task<CreatedTitleDefinitonResponse> Handle(CreateTitleDefinitonCommand request, CancellationToken cancellationToken)
         {
-            TitleDefiniton mappedTitleDefiniton = _mapper.Map<TitleDefiniton>(request);
+            TitleDefinition mappedTitleDefiniton = _mapper.Map<TitleDefinition>(request);
 
             _titleDefinitonRepository.Add(mappedTitleDefiniton);
 

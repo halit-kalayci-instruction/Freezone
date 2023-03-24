@@ -24,7 +24,7 @@ public class GetByIdTitleDefinitonQuery : IRequest<GetByIdTitleDefinitonResponse
 
         public async Task<GetByIdTitleDefinitonResponse> Handle(GetByIdTitleDefinitonQuery request, CancellationToken cancellationToken)
         {
-            TitleDefiniton? titleDefiniton = await _titleDefinitonRepository.GetAsync(b => b.Id == request.Id);
+            TitleDefinition? titleDefiniton = await _titleDefinitonRepository.GetAsync(b => b.Id == request.Id);
 
             GetByIdTitleDefinitonResponse response = _mapper.Map<GetByIdTitleDefinitonResponse>(titleDefiniton);
             return response;

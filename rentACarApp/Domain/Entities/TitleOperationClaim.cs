@@ -12,7 +12,7 @@ namespace Domain.Entities
     {
         public int TitleDefinitionId { get; set; }
         public int OperationClaimId { get; set; }
-        public virtual TitleDefiniton TitleDefiniton { get; set; }
+        public virtual TitleDefinition TitleDefinition { get; set; }
         public virtual OperationClaim OperationClaim { get; set; }
 
     }

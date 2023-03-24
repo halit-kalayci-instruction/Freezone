@@ -28,7 +28,7 @@ public class DeleteTitleDefinitonCommand : IRequest<DeletedTitleDefinitonRespons
 
         public async Task<DeletedTitleDefinitonResponse> Handle(DeleteTitleDefinitonCommand request, CancellationToken cancellationToken)
         {
-            TitleDefiniton titleDefiniton = _titleDefinitonRepository.Get(b => b.Id == request.Id);
+            TitleDefinition titleDefiniton = _titleDefinitonRepository.Get(b => b.Id == request.Id);
 
             _titleDefinitonRepository.Delete(titleDefiniton);
 

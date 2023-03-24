@@ -13,14 +13,14 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<TitleDefiniton, CreateTitleDefinitonCommand>().ReverseMap();
-        CreateMap<TitleDefiniton, CreatedTitleDefinitonResponse>().ReverseMap();
-        CreateMap<TitleDefiniton, UpdateTitleDefinitonCommand>().ReverseMap();
-        CreateMap<TitleDefiniton, UpdatedTitleDefinitonResponse>().ReverseMap();
-        CreateMap<TitleDefiniton, DeleteTitleDefinitonCommand>().ReverseMap();
-        CreateMap<TitleDefiniton, DeletedTitleDefinitonResponse>().ReverseMap();
-        CreateMap<TitleDefiniton, GetByIdTitleDefinitonResponse>().ReverseMap();
-        CreateMap<TitleDefiniton, GetListTitleDefinitonDto>().ReverseMap();
-        CreateMap<IPaginate<TitleDefiniton>, GetListResponse<GetListTitleDefinitonDto>>().ReverseMap();
+        CreateMap<TitleDefinition, CreateTitleDefinitonCommand>().ReverseMap();
+        CreateMap<TitleDefinition, CreatedTitleDefinitonResponse>().ReverseMap();
+        CreateMap<TitleDefinition, UpdateTitleDefinitonCommand>().ReverseMap();
+        CreateMap<TitleDefinition, UpdatedTitleDefinitonResponse>().ReverseMap();
+        CreateMap<TitleDefinition, DeleteTitleDefinitonCommand>().ReverseMap();
+        CreateMap<TitleDefinition, DeletedTitleDefinitonResponse>().ReverseMap();
+        CreateMap<TitleDefinition, GetByIdTitleDefinitonResponse>().ReverseMap();
+        CreateMap<TitleDefinition, GetListTitleDefinitonDto>().ReverseMap();
+        CreateMap<IPaginate<TitleDefinition>, GetListResponse<GetListTitleDefinitonDto>>().ReverseMap();
     }
 }

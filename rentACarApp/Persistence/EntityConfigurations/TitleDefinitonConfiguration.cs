@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfigurations;
 
-public class TitleDefinitonConfiguration : IEntityTypeConfiguration<TitleDefiniton>
+public class TitleDefinitonConfiguration : IEntityTypeConfiguration<TitleDefinition>
 {
-    public void Configure(EntityTypeBuilder<TitleDefiniton> builder)
+    public void Configure(EntityTypeBuilder<TitleDefinition> builder)
     {
         builder.ToTable("TitleDefinitons");
 
