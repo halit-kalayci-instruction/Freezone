@@ -1,6 +1,7 @@
 using Application.Features.GroupTreeContents.Commands.Create;
 using Application.Features.GroupTreeContents.Commands.Delete;
 using Application.Features.GroupTreeContents.Commands.Update;
+using Application.Features.GroupTreeContents.Queries.GetAll;
 using Application.Features.GroupTreeContents.Queries.GetById;
 using Application.Features.GroupTreeContents.Queries.GetList;
 using Freezone.Core.Application.Requests;
@@ -49,6 +50,14 @@ public class GroupTreeContentsController : BaseController
     {
         GetListGroupTreeContentQuery getListGroupTreeContentQuery = new() { PageRequest = pageRequest };
         GetListResponse<GetListGroupTreeContentDto> response = await Mediator.Send(getListGroupTreeContentQuery);
+        return Ok(response);
+    }
+
+    [HttpGet("GetAll")]
+    public async Task<IActionResult> GetAll()
+    {
+        GetAllGroupTreeContentQuery getListGroupTreeContentQuery = new();
+        var response = await Mediator.Send(getListGroupTreeContentQuery);
         return Ok(response);
     }
 }
