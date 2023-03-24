@@ -17,6 +17,8 @@ namespace Domain.Entities
         public int RowOrder { get; set; }
         public GroupTreeContentType Type { get; set; }
         public virtual ICollection<GroupTreeContentOperationClaim> GroupTreeContentOperationClaims { get; set; }
+        public bool HideOnAuth { get; set; }
+        public bool ShowOnAuth { get; set; }
 
         public GroupTreeContent()
         {

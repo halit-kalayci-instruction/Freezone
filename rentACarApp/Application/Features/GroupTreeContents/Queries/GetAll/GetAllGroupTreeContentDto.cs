@@ -12,6 +12,8 @@ namespace Application.Features.GroupTreeContents.Queries.GetAll
         public string ImgUrl { get; set; }
         public string NavigateUrl { get; set; }
         public int RowOrder { get; set; }
+        public bool ShowOnAuth { get; set; }
+        public bool HideOnAuth { get; set; }
         public GroupTreeContentType Type { get; set; }
         public ICollection<string> Roles { get; set; }
     }
