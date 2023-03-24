@@ -38,6 +38,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<ICarRepository, CarRepository>();
         services.AddScoped<IGroupTreeContentRepository, GroupTreeContentRepository>();
         services.AddScoped<ITitleDefinitonRepository, TitleDefinitonRepository>();
+        services.AddScoped<ITitleOperationClaimRepository, TitleOperationClaimRepository>();
         return services;
     }
 }
