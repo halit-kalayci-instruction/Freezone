@@ -69,21 +69,37 @@ namespace Application.Tests.Mocks.Repositories
                 .Returns(brandToAdd);
             #endregion
             #region GetAsync Mock
+
+         
+
+            // Genelden -> özele
             mockRepository.Setup(s => s.GetAsync(
-                    It.IsAny<Expression<Func<Brand, bool>>>(),
-                    It.IsAny<Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>>>(),
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()
-                )).ReturnsAsync((Expression<Func<Brand, bool>> predicate, Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>> ? include, bool enableTracking,
+                 It.IsAny<Expression<Func<Brand, bool>>>(),
+                 It.IsAny<Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>>>(),
+                 It.IsAny<bool>(),
+                 It.IsAny<CancellationToken>()
+                 )).ReturnsAsync((Expression<Func<Brand, bool>> predicate, Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>>? include, bool enableTracking,
+                       CancellationToken cancellationToken) =>
+                 {
+                     return null;
+                 });
+
+            mockRepository.Setup(s => s.GetAsync(
+                i => i.Name == "BMW",
+                It.IsAny<Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>>>(),
+                It.IsAny<bool>(),
+                It.IsAny<CancellationToken>()
+                )).ReturnsAsync((Expression<Func<Brand, bool>> predicate, Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>>? include, bool enableTracking,
                       CancellationToken cancellationToken) =>
                 {
-                    Brand brand = null;
-                    if(predicate != null)
-                    {
-                        brand = brands.Where(predicate.Compile()).FirstOrDefault();
-                    }
-                    return brand;
+                    return brands[0];
                 });
+
+
+
+
+
+
             #endregion
             #region GetListAsync Mock
             mockRepository.Setup(s => s.GetListAsync(
