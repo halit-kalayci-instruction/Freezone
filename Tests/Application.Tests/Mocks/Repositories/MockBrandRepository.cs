@@ -85,6 +85,39 @@ namespace Application.Tests.Mocks.Repositories
                     return brand;
                 });
             #endregion
+            #region GetListAsync Mock
+            mockRepository.Setup(s => s.GetListAsync(
+                    It.IsAny<Expression<Func<Brand, bool>>>(),
+                    It.IsAny<Func<IQueryable<Brand>, IOrderedQueryable<Brand>>>(),
+                    It.IsAny<Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>>>(),
+                    It.IsAny<int>(),
+                    It.IsAny<int>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()
+                )).ReturnsAsync((Expression<Func<Brand, bool>>? predicate,
+                                    Func<IQueryable<Brand>, IOrderedQueryable<Brand>>? orderBy,
+                                    Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>>? include,
+                                    int index, int size, bool enableTracking,
+                                    CancellationToken cancellationToken) =>
+                {
+                    IList<Brand> brandList;
+                    if(predicate != null)
+                    {
+                        brandList = brands.Where(predicate.Compile()).ToList();
+                    }
+                    else
+                    {
+                        brandList = brands;
+                    }
+                    Paginate<Brand> list = new()
+                    {
+                        Items = brandList,
+                        Index=index,
+                        Size=size
+                    };
+                    return list;
+                });
+            #endregion
 
             return mockRepository;
         }

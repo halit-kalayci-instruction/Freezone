@@ -1,5 +1,6 @@
 ﻿using Application.Features.Brands.Commands.Create;
 using Application.Features.Brands.Profiles;
+using Application.Features.Brands.Queries.GetList;
 using Application.Features.Brands.Rules;
 using Application.Services.Repositories;
 using Application.Tests.Mocks.Repositories;
@@ -14,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Brands.Commands.Create.CreateBrandCommand;
+using static Application.Features.Brands.Queries.GetList.GetListBrandQuery;
 
 namespace Application.Tests.FeatureTests.Brands
 {
@@ -61,5 +63,15 @@ namespace Application.Tests.FeatureTests.Brands
             await Assert.ThrowsAsync<BusinessException>(async () => await handler.Handle(command, CancellationToken.None));
         }
 
+        [Fact]
+        public async Task GetAllBrands()
+        {
+            GetListBrandQuery query = new() { PageRequest= new() { Page=0, PageSize=10} };
+            GetListBrandQueryHandler handler = new(_mockBrandRepository.Object, _mapper);
+
+            var result = await handler.Handle(query, CancellationToken.None);
+            //bool testResult = (result.Items.Count == 2 && result.Index == 0 && result.Size == 10);
+            Assert.Equal(2, result.Items.Count);
+        }
     }
 }
