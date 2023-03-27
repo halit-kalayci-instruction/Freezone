@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 //using static FluentValidation.Validators.PredicateValidator<T, TProperty>;
 
@@ -66,6 +67,23 @@ namespace Application.Tests.Mocks.Repositories
             mockRepository
                 .Setup(s => s.Add(It.IsAny<Brand>()))
                 .Returns(brandToAdd);
+            #endregion
+            #region GetAsync Mock
+            mockRepository.Setup(s => s.GetAsync(
+                    It.IsAny<Expression<Func<Brand, bool>>>(),
+                    It.IsAny<Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>>>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()
+                )).ReturnsAsync((Expression<Func<Brand, bool>> predicate, Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>> ? include, bool enableTracking,
+                      CancellationToken cancellationToken) =>
+                {
+                    Brand brand = null;
+                    if(predicate != null)
+                    {
+                        brand = brands.Where(predicate.Compile()).FirstOrDefault();
+                    }
+                    return brand;
+                });
             #endregion
 
             return mockRepository;
