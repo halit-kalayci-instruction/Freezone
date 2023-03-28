@@ -2,8 +2,10 @@
 using Domain.Entities;
 using Freezone.Core.Security.Authenticator;
 using Freezone.Core.Security.Entities;
+using Freezone.Core.Security.Hashing;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +20,12 @@ namespace Application.Tests.Mocks.Repositories.Auth
         //TDD 
         public static Mock<IUserRepository> GetUserRepositoryMock()
         {
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash("123456", out passwordHash, out passwordSalt);
             var userList = new List<User>()
             {
-                new(){ Id = 1, AuthenticatorType=AuthenticatorType.None, Email="halit@kodlama.io", FirstName="Halit", LastName="Kalaycı" },
-                new(){ Id = 2, AuthenticatorType=AuthenticatorType.None, Email="engin@kodlama.io", FirstName="Engin", LastName="Demiroğ" },
+                new(){ Id = 1, AuthenticatorType=AuthenticatorType.None, Email="halit@kodlama.io", FirstName="Halit", LastName="Kalaycı",PasswordHash=passwordHash, PasswordSalt=passwordSalt },
+                new(){ Id = 2, AuthenticatorType=AuthenticatorType.None, Email="engin@kodlama.io", FirstName="Engin", LastName="Demiroğ",PasswordHash=passwordHash, PasswordSalt=passwordSalt },
             };
             var mockRepo = new Mock<IUserRepository>();
             #region GetAsync Mock

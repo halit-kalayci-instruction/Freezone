@@ -1,4 +1,5 @@
 ﻿using Application.Services.Repositories;
+using Freezone.Core.Security.Entities;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,15 @@ namespace Application.Tests.Mocks.Repositories.Auth
     {
         public static Mock<IRefreshTokenRepository> GetRefreshTokenRepositoryMock()
         {
+            List<RefreshToken> tokens = new List<RefreshToken>()
+            {
+                new(){ UserId=1, Token="abc"}
+            };
             var mockRepo = new Mock<IRefreshTokenRepository>();
-
+            mockRepo.Setup(s => s.GetAllOldActiveRefreshTokensAsync(It.IsAny<User>(), It.IsAny<int>())).ReturnsAsync((User user, int ttl) =>
+            {
+                return tokens.Where(i=>i.UserId == user.Id).ToList();
+            });
             return mockRepo;
         }
     }

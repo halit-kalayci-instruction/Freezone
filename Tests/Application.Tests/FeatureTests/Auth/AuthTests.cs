@@ -25,6 +25,7 @@ namespace Application.Tests.FeatureTests.Auth
         private readonly Mock<IUserRepository> _userRepository;
         private readonly AuthBusinessRules _authBusinessRules;
         private IAuthService _authService;
+        private IConfiguration _configuration;
 
         public AuthTests()
         {
@@ -43,14 +44,33 @@ namespace Application.Tests.FeatureTests.Auth
 
             Mock<ITitleOperationClaimRepository> _titleOperationClaimsRepository = MockTitleOperationClaimRepository.GetTitleOperationClaimMock();
 
-            IConfiguration configuration = MockConfiguration.GetConfigurationMock();
+            _configuration = MockConfiguration.GetConfigurationMock();
 
-            ITokenHelper tokenHelper = new JwtHelper(configuration);
+            ITokenHelper tokenHelper = new JwtHelper(_configuration);
             IEmailAuthenticatorHelper emailAuthenticatorHelper = new EmailAuthenticatorHelper();
-            IMailService mailService = new MailKitMailService(configuration);
+            IMailService mailService = new MailKitMailService(_configuration);
             IOtpAuthenticatorHelper otpAuthenticatorHelper = new OtpAuthenticatorHelper();
 
             _authService = new AuthService(_userOperationClaimRepository.Object, tokenHelper, _refreshTokenRepository.Object, emailAuthenticatorHelper, _userEmailAuthenticatorRepository.Object,mailService,otpAuthenticatorHelper, _userOtpAuthenticatorRepository.Object, _userTitleDefRepository.Object, _titleOperationClaimsRepository.Object);
+        }
+
+        [Fact]
+        public async Task SuccessfullLoginTest()
+        {
+            LoginCommand command = new() { UserForLoginDto = new() { Email = "halit@kodlama.io", Password = "123456" }, IpAddress = "127.0.0.1" };
+            LoginCommandHandler handler = new(_userRepository.Object,_authBusinessRules, _authService);
+            var result = await handler.Handle(command, CancellationToken.None);
+            Assert.NotNull(result.AccessToken.Token);
+        }
+        [Fact]
+        public async Task JwtExpirationTimeTest()
+        {
+            LoginCommand command = new() { UserForLoginDto = new() { Email = "halit@kodlama.io", Password = "123456" }, IpAddress = "127.0.0.1" };
+            LoginCommandHandler handler = new(_userRepository.Object, _authBusinessRules, _authService);
+            var result = await handler.Handle(command, CancellationToken.None);
+            var tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptions>();
+            bool tokenExpiresInTime = DateTime.UtcNow.AddMinutes(tokenOptions.AccessTokenExpiration + 1) > result.AccessToken.Expiration;
+            Assert.True(tokenExpiresInTime,"İlgili access token geçerlilik süresi yanlış oluşturuldu.");
         }
     }
 }

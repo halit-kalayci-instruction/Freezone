@@ -13,21 +13,29 @@ namespace Application.Tests.Mocks.Repositories.Auth
     {
         public static Mock<IUserOperationClaimRepository> GetUserOperationClaimRepositoryMock()
         {
-            var operationClaims = new List<UserOperationClaim>()
+            var operationClaims = new List<OperationClaim>()
             {
-                new(){ Id=1,OperationClaimId=1, UserId=1,Status=1 },
-                new(){ Id=2,OperationClaimId=2, UserId=1,Status=1 },
-                new(){ Id=3,OperationClaimId=1, UserId=2,Status=1 },
-                new(){ Id=4,OperationClaimId=4, UserId=2,Status=1 },
-                new(){ Id=5,OperationClaimId=5, UserId=5,Status=1 },
+                new(){ Id=1, Name="Admin",Status=1 },
+                new(){ Id=2, Name="Brands.Create",Status=1 },
+                new(){ Id=3, Name="Brands.Delete",Status=1 },
+                new(){ Id=4, Name="Brands.Update",Status=1 },
+                new(){ Id=5, Name="Moderator",Status=1 },
             };
             var mockRepo = new Mock<IUserOperationClaimRepository>();
 
-            mockRepo.Setup(s => s.GetOperationClaimsByUserIdAsync(It.IsAny<int>()))
-                    .Returns((int userId) =>
-                    {
-                        return operationClaims.Where(i=>i.UserId == userId).ToList();
-                    });
+            //mockRepo.Setup(s => s.GetOperationClaimsByUserIdAsync(It.IsAny<int>()))
+            //        .ReturnsAsync((int userId) =>
+            //        {
+            //            var claims = operationClaims.Where(i => i.UserId == userId);
+            //            return claims;
+            //        });
+
+            mockRepo.Setup(s => s.GetOperationClaimsByUserIdAsync(It.IsAny<int>())).Returns((int userId) =>
+            {
+                var claims = operationClaims.ToList();
+                return Task.FromResult(claims as ICollection<OperationClaim>);
+            });
+
 
             return mockRepo;
         }
