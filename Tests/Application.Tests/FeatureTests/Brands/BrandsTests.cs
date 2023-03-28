@@ -3,7 +3,7 @@ using Application.Features.Brands.Profiles;
 using Application.Features.Brands.Queries.GetList;
 using Application.Features.Brands.Rules;
 using Application.Services.Repositories;
-using Application.Tests.Mocks.Repositories;
+using Application.Tests.Mocks.Repositories.Brands;
 using AutoMapper;
 using FluentValidation;
 using Freezone.Core.CrossCuttingConcerns.Exceptions;

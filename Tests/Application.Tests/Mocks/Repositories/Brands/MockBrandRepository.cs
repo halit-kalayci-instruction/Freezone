@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 //using static FluentValidation.Validators.PredicateValidator<T, TProperty>;
 
-namespace Application.Tests.Mocks.Repositories
+namespace Application.Tests.Mocks.Repositories.Brands
 {
     public static class MockBrandRepository
     {
@@ -32,7 +32,7 @@ namespace Application.Tests.Mocks.Repositories
                 Items = brands
             };
             mockRepository.Setup(s => s.GetList(
-                It.IsAny<Expression<Func<Brand, bool>>>(), 
+                It.IsAny<Expression<Func<Brand, bool>>>(),
                 It.IsAny<Func<IQueryable<Brand>, IOrderedQueryable<Brand>>>(),
                 It.IsAny<Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>>>(),
                 It.IsAny<int>(),
@@ -55,22 +55,18 @@ namespace Application.Tests.Mocks.Repositories
             //});
             #endregion
             #region Add Method Mock
-            var brandToAdd = new Domain.Entities.Brand()
-            {
-                Name="Mercedes",
-                Id=3,
-                CreatedDate=DateTime.Now,
-                Status=1,
-                UpdatedDate=DateTime.Now,
-            };
             // It.IsAny<Brand>() => Gelecek parametre herhangi bir Brand nesnesi olabilir
             mockRepository
                 .Setup(s => s.Add(It.IsAny<Brand>()))
-                .Returns(brandToAdd);
+                .Returns((Brand entity) =>
+                {
+                    brands.Add(entity);
+                    return entity;
+                });
             #endregion
             #region GetAsync Mock
 
-         
+
 
             // Genelden -> özele
             mockRepository.Setup(s => s.GetAsync(
@@ -81,7 +77,10 @@ namespace Application.Tests.Mocks.Repositories
                  )).ReturnsAsync((Expression<Func<Brand, bool>> predicate, Func<IQueryable<Brand>, IIncludableQueryable<Brand, object>>? include, bool enableTracking,
                        CancellationToken cancellationToken) =>
                  {
-                     return null;
+                     Brand brand = null;
+                     if (predicate != null)
+                         brand = brands.Where(predicate.Compile()).FirstOrDefault();
+                     return brand;
                  });
 
             mockRepository.Setup(s => s.GetAsync(
@@ -117,7 +116,7 @@ namespace Application.Tests.Mocks.Repositories
                                     CancellationToken cancellationToken) =>
                 {
                     IList<Brand> brandList;
-                    if(predicate != null)
+                    if (predicate != null)
                     {
                         brandList = brands.Where(predicate.Compile()).ToList();
                     }
@@ -128,8 +127,8 @@ namespace Application.Tests.Mocks.Repositories
                     Paginate<Brand> list = new()
                     {
                         Items = brandList,
-                        Index=index,
-                        Size=size
+                        Index = index,
+                        Size = size
                     };
                     return list;
                 });

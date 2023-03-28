@@ -24,13 +24,17 @@ public class AuthService : IAuthService
     private readonly IUserTitleDefinitonRepository _userTitleDefinitonRepository;
     private readonly ITitleOperationClaimRepository _titleOperationClaimRepository;
 
-    public AuthService(IUserOperationClaimRepository userOperationClaimRepository, ITokenHelper tokenHelper,
+    // TDD : Test Driven Development
+    public AuthService(IUserOperationClaimRepository userOperationClaimRepository, 
+                       ITokenHelper tokenHelper,
                        IRefreshTokenRepository refreshTokenRepository,
                        IEmailAuthenticatorHelper emailAuthenticatorHelper,
                        IUserEmailAuthenticatorRepository userEmailAuthenticatorRepository,
                        IMailService mailService,
                        IOtpAuthenticatorHelper otpAuthenticatorHelper,
-                       IUserOtpAuthenticatorRepository userOtpAuthenticatorRepository, IUserTitleDefinitonRepository userTitleDefinitonRepository, ITitleOperationClaimRepository titleOperationClaimRepository)
+                       IUserOtpAuthenticatorRepository userOtpAuthenticatorRepository, 
+                       IUserTitleDefinitonRepository userTitleDefinitonRepository, 
+                       ITitleOperationClaimRepository titleOperationClaimRepository)
     {
         _userOperationClaimRepository = userOperationClaimRepository;
         _tokenHelper = tokenHelper;

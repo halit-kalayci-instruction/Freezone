@@ -20,7 +20,8 @@ public class LoginCommand : IRequest<LoggedResponse>
         private readonly AuthBusinessRules _authBusinessRules;
         private readonly IAuthService _authService;
 
-        public LoginCommandHandler(IUserRepository userRepository, AuthBusinessRules authBusinessRules,
+        public LoginCommandHandler(IUserRepository userRepository, 
+                                   AuthBusinessRules authBusinessRules,
                                    IAuthService authService)
         {
             _userRepository = userRepository;
