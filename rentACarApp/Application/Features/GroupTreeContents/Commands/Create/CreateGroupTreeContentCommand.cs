@@ -49,7 +49,6 @@ public class CreateGroupTreeContentCommand : IRequest<CreatedGroupTreeContentRes
                 OperationClaimId = i,
                 GroupTreeContentId = mappedGroupTreeContent.Id
             }).ToList();
-            throw new Exception();
             await _groupTreeContentOperationClaimService.AddRange(operationClaims);
             CreatedGroupTreeContentResponse response = _mapper.Map<CreatedGroupTreeContentResponse>(mappedGroupTreeContent);
             return response;
