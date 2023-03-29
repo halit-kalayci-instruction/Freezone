@@ -16,15 +16,15 @@ namespace Persistence.Contexts;
 public class BaseDbContext : DbContext
 {
     protected IConfiguration Configuration { get; set; }
-    public DbSet<UserTitleDefiniton> UserTitleDefinitons { get; set; }
-    public DbSet<TitleDefinition> TitleDefinitons { get; set; }
+
 
     public BaseDbContext(DbContextOptions dbContextOptions,
         IConfiguration configuration) : base(dbContextOptions)
     {
         Configuration = configuration;
     }
-
+    public DbSet<UserTitleDefiniton> UserTitleDefinitons { get; set; }
+    public DbSet<TitleDefinition> TitleDefinitons { get; set; }
     public DbSet<Brand> Brands { get; set; }
     public DbSet<Model> Models { get; set; }
     public DbSet<Fuel> Fuel { get; set; }

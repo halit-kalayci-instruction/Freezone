@@ -21,6 +21,7 @@ using Freezone.Core.Mailing.MailKit;
 using Freezone.Core.Security.Authenticator.Email;
 using Freezone.Core.Security.Authenticator.Otp;
 using Freezone.Core.Security.JWT;
+using Application.Services.GroupTreeContentOperationClaimService;
 
 namespace Application
 {
@@ -51,6 +52,7 @@ namespace Application
 
             services.AddScoped<ITokenHelper, JwtHelper>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IGroupTreeContentOperationClaimService, GroupTreeContentOperationClaimService>();
             services.AddScoped<IEmailAuthenticatorHelper, EmailAuthenticatorHelper>();
             services.AddScoped<IMailService, MailKitMailService>();
             services.AddScoped<IOtpAuthenticatorHelper, OtpAuthenticatorHelper>();

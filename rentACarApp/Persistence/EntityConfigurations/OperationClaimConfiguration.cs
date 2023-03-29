@@ -30,6 +30,11 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Create" });
         seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Delete" });
         seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Update" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "GroupTreeContentOperationClaims.Create" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "GroupTreeContentOperationClaims.Delete" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "GroupTreeContentOperationClaims.Update" });
+        seed.Add(new OperationClaim { Id = ++id, Name = "GroupTreeContentOperationClaims.Get" });
+
         seed.Add(new OperationClaim { Id = ++id, Name = "Cars.Get" });
         #endregion
 

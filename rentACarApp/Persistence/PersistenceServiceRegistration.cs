@@ -40,6 +40,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<ITitleDefinitonRepository, TitleDefinitonRepository>();
         services.AddScoped<ITitleOperationClaimRepository, TitleOperationClaimRepository>();
         services.AddScoped<IUserTitleDefinitonRepository, UserTitleDefinitonRepository>();
+        services.AddScoped<IGroupTreeContentOperationClaimRepository, GroupTreeContentOperationClaimRepository>();
         return services;
     }
 }

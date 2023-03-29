@@ -1,0 +1,5 @@
+namespace Application.Features.GroupTreeContentOperationClaims.Constants;
+
+public static class GroupTreeContentOperationClaimsBusinessMessages
+{
+}
