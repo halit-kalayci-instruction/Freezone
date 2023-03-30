@@ -49,6 +49,7 @@ public class AuthService : IAuthService
     }
 
     // TODO: Refactor to 1 or 2 query
+    // TODO: SignalR=> Canlı sistem , HangFire=> Background Jobs
     public async Task<AccessToken> CreateAccessToken(User user)
     {
         ICollection<OperationClaim> operationClaims =

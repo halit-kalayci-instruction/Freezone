@@ -1,7 +1,9 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Cars.Constants;
+using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
+using Freezone.Core.Application.Pipelines.Authorization;
 using Freezone.Core.Application.Requests;
 using Freezone.Core.Persistence.Paging;
 using MediatR;
@@ -14,9 +16,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Cars.Queries.GetList
 {
-    public class GetListCarQuery : IRequest<GetListResponse<GetListCarDto>>
+    public class GetListCarQuery : IRequest<GetListResponse<GetListCarDto>>, ISecuredOperation
     {
         public PageRequest PageRequest { get; set; }
+
+        public string[] Roles => new[] { CarsRoles.Create };
 
         public class GetListCarQueryHandler : IRequestHandler<GetListCarQuery, GetListResponse<GetListCarDto>>
         {
