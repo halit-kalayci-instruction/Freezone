@@ -3,6 +3,7 @@ using Application;
 using Application.Hubs;
 using Freezone.Core.CrossCuttingConcerns.Exceptions;
 using Freezone.Core.Security.JWT;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -35,6 +36,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) // Au
        });
 
 builder.Services.AddHttpContextAccessor();
+GlobalHost.HubPipeline.AddModule(new JwtHeaderModule());
 builder.Services.AddSignalR();
 builder.Services.AddControllers().AddJsonOptions(opt =>
 {
@@ -106,10 +108,11 @@ app.UseStaticFiles();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
-app.UseAuthorization();
 app.UseRouting();
 
 app.UseCors(opt => opt.WithOrigins("http://localhost:3000").WithOrigins("http://192.168.1.33:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+
+app.UseAuthorization();
 
 app.UseEndpoints((endpoints) =>
 {

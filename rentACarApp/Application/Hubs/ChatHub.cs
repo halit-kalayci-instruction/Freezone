@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,13 @@ namespace Application.Hubs
 {
     public class ChatHub : Hub
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public ChatHub(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
         static List<string> connectedIds = new List<string>();
         public async Task SendMessageAsync(string message)
         {
@@ -18,6 +27,7 @@ namespace Application.Hubs
 
         public override Task OnConnectedAsync()
         {
+            var user = _httpContextAccessor.HttpContext.User;
             connectedIds.Add(Context.ConnectionId);
             Clients.All.SendAsync("UserListChanged", connectedIds);
             return base.OnConnectedAsync();
