@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Application;
+using Application.Hubs;
 using Freezone.Core.CrossCuttingConcerns.Exceptions;
 using Freezone.Core.Security.JWT;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -34,7 +35,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) // Au
        });
 
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddSignalR();
 builder.Services.AddControllers().AddJsonOptions(opt =>
 {
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -97,6 +98,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.ConfigureCustomExceptionMiddleware();
 // Statik dosyaları host edebilmemizi sağlar.
 app.UseStaticFiles();
@@ -105,8 +107,15 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRouting();
 
-app.MapControllers();
-app.UseCors(opt => opt.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+app.UseCors(opt => opt.WithOrigins("http://localhost:3000").WithOrigins("http://192.168.1.33:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+
+app.UseEndpoints((endpoints) =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/api/chathub");
+});
+
 
 app.Run();
