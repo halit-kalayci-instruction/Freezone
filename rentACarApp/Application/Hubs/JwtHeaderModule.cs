@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Application.Hubs
 {
+    // TODO: Investigate
     public class JwtHeaderModule : HubPipelineModule
     {
-        protected override void OnIncomingError(ExceptionContext exceptionContext, IHubIncomingInvokerContext invokerContext)
+        protected override bool OnBeforeConnect(IHub hub)
         {
-            //invokerContext.GetHttpContext();
-            base.OnIncomingError(exceptionContext, invokerContext);
+            return base.OnBeforeConnect(hub);
         }
     }
 }

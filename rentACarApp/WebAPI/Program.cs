@@ -23,6 +23,25 @@ TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Ge
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) // Authentication: "Bearer JWT_TOKEN"
        .AddJwtBearer(opt =>
        {
+           opt.SaveToken = true;
+           opt.Events = new JwtBearerEvents
+           {
+               OnMessageReceived = context =>
+               {
+                   var accessToken = context.Request.Query["access_token"];
+
+                   if (!string.IsNullOrEmpty(accessToken))
+                   {
+                       context.Token = accessToken;
+                   }
+                   return Task.CompletedTask;
+               },
+               OnAuthenticationFailed = context =>
+               {
+                   var exception = context.Exception;
+                   return Task.CompletedTask;
+               }
+           };
            opt.TokenValidationParameters = new TokenValidationParameters
            {
                ValidateIssuer = true,

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Freezone.Core.Security.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using System;
@@ -19,6 +20,8 @@ namespace Application.Hubs
         }
 
         static List<string> connectedIds = new List<string>();
+
+        static List<string> connectedUsers = new List<string>();
         public async Task SendMessageAsync(string message)
         {
             // Fonksiyon
@@ -28,15 +31,19 @@ namespace Application.Hubs
         public override Task OnConnectedAsync()
         {
             var user = _httpContextAccessor.HttpContext.User;
+            if (!user.Identity.IsAuthenticated) throw new UnauthorizedAccessException();
             connectedIds.Add(Context.ConnectionId);
-            Clients.All.SendAsync("UserListChanged", connectedIds);
+            connectedUsers.Add(user.Identity.Name);
+            Clients.All.SendAsync("UserListChanged", connectedUsers);
             return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
+            var user = _httpContextAccessor.HttpContext.User;
             connectedIds.Remove(Context.ConnectionId);
-            Clients.All.SendAsync("UserListChanged", connectedIds);
+            connectedUsers.Remove(user.Identity.Name);
+            Clients.All.SendAsync("UserListChanged", connectedUsers);
             return base.OnDisconnectedAsync(exception);
         }
     }
