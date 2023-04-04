@@ -6,12 +6,7 @@ using Freezone.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Freezone.Core.CrossCuttingConcerns.Logging.Serilog;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Application.Services.AuthService;
 using Freezone.Core.Application.Pipelines.Authorization;
 using Freezone.Core.Application.Pipelines.Transaction;
@@ -22,8 +17,7 @@ using Freezone.Core.Security.Authenticator.Email;
 using Freezone.Core.Security.Authenticator.Otp;
 using Freezone.Core.Security.JWT;
 using Application.Services.GroupTreeContentOperationClaimService;
-using Microsoft.AspNet.SignalR;
-using Application.Hubs;
+
 
 namespace Application
 {
