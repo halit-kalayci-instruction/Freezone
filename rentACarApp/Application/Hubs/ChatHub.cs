@@ -23,8 +23,28 @@ namespace Application.Hubs
 
         static List<string> connectedUsers = new List<string>();
 
-        readonly List<string> blockedUsers = new List<string>() { "vj123lcsd", "jbas81234" };
+        static readonly List<string> blockedUsers = new List<string>() { "vj123lcsd", "jbas81234" };
+
+        static List<ChatMessage> messages = new List<ChatMessage>();
+
         public async Task SendMessageAsync(string message)
+        {
+            var user = _httpContextAccessor.HttpContext.User;
+            var userName = user.Identity.Name;
+            var chatMessage = new ChatMessage()
+            {
+                SenderFullName = userName,
+                Date = DateTime.Now,
+                Message = message,
+                SenderId = Context.ConnectionId
+            };
+            messages.Add(chatMessage);
+            await Clients.Others.SendAsync("ReceiveMessage", chatMessage);
+            await Clients.All.SendAsync("MessagesChanged", messages);
+        }
+
+        // Notlar
+        public async Task SendMessageAsyncExample(string message)
         {
             // Gönderen hariç tüm bağlı clientlara erişim.
             #region Others 
@@ -55,16 +75,11 @@ namespace Application.Hubs
             connectedIds.Add(Context.ConnectionId);
             connectedUsers.Add(user.Identity.Name);
             Clients.All.SendAsync("UserListChanged", connectedUsers);
-
             // Claims.Groups = ["IKGrubu", "Yönetim"]
-
-
-
             #region Group İşlemleri
             // Kullanıcının TITLE_DEFINITON alanındaki Title alanı grup ismi olmalıdır.
             Groups.AddToGroupAsync(Context.ConnectionId, "IKGrubu");
             #endregion
-
             return base.OnConnectedAsync();
         }
 
