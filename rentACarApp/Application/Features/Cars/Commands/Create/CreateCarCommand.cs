@@ -8,7 +8,7 @@ using Domain.Enums;
 using Freezone.Core.Application.Pipelines.Authorization;
 using Freezone.Core.Application.Pipelines.Caching;
 using MediatR;
-using Microsoft.AspNet.SignalR;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Application.Features.Cars.Commands.Create;
 
@@ -31,10 +31,10 @@ public class CreateCarCommand : IRequest<CreatedCarResponse>, ISecuredOperation,
         private readonly IMapper _mapper;
         private readonly ICarRepository _carRepository;
         private readonly CarBusinessRules _carBusinessRules;
-        private readonly IHubContext<ChatHub> _hubContext;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
         public CreateCarCommandHandler(IMapper mapper, ICarRepository carRepository,
-                                         CarBusinessRules carBusinessRules, IHubContext<ChatHub> hubContext)
+                                         CarBusinessRules carBusinessRules, IHubContext<NotificationHub> hubContext)
         {
             _mapper = mapper;
             _carRepository = carRepository;
@@ -47,7 +47,7 @@ public class CreateCarCommand : IRequest<CreatedCarResponse>, ISecuredOperation,
             Car mappedCar = _mapper.Map<Car>(request);
 
             _carRepository.Add(mappedCar);
-            await _hubContext.Clients.All.SendNotificationAsync("Sisteme yeni bir araba eklendi.");
+            await _hubContext.Clients.All.SendAsync("NewNotification","Sisteme yeni bir araba eklendi.");
             CreatedCarResponse response = _mapper.Map<CreatedCarResponse>(mappedCar);
             return response;
         }
