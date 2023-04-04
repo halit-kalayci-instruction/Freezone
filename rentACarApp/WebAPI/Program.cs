@@ -5,6 +5,7 @@ using Freezone.Core.CrossCuttingConcerns.Exceptions;
 using Freezone.Core.Security.JWT;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
@@ -56,7 +57,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) // Au
 
 builder.Services.AddHttpContextAccessor();
 GlobalHost.HubPipeline.AddModule(new JwtHeaderModule());
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(opt =>
+{
+    // SignalR Options Configuration
+});
+//builder.Services.AddSignalR<ChatHub>();
 builder.Services.AddControllers().AddJsonOptions(opt =>
 {
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;

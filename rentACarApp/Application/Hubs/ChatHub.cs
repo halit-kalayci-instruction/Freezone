@@ -43,6 +43,11 @@ namespace Application.Hubs
             await Clients.All.SendAsync("MessagesChanged", messages);
         }
 
+        public async Task SendNotificationAsync(string notification)
+        {
+            await Clients.All.SendAsync("NewNotification", notification);
+        }
+
         // Notlar
         public async Task SendMessageAsyncExample(string message)
         {

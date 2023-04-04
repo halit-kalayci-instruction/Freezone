@@ -22,6 +22,8 @@ using Freezone.Core.Security.Authenticator.Email;
 using Freezone.Core.Security.Authenticator.Otp;
 using Freezone.Core.Security.JWT;
 using Application.Services.GroupTreeContentOperationClaimService;
+using Microsoft.AspNet.SignalR;
+using Application.Hubs;
 
 namespace Application
 {
@@ -33,7 +35,6 @@ namespace Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
             services.AddTransient(typeof(IPipelineBehavior<,>)
                 ,typeof(RequestValidationBehavior<,>));
 
