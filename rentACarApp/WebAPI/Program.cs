@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Hangfire;
 using Persistence;
-
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,6 +19,10 @@ builder.Services.AddApplicationServices();
 
 builder.Services.AddDistributedMemoryCache();
 //builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379");
+//TODO: Configuration
+builder.Services.AddHangfire(config=> { config.UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireServer")); });
+builder.Services.AddHangfireServer();
+
 
 TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) // Authentication: "Bearer JWT_TOKEN"
@@ -130,7 +134,7 @@ app.ConfigureCustomExceptionMiddleware();
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
-
+app.UseHangfireDashboard("/hangfire");
 app.UseAuthentication();
 app.UseRouting();
 
