@@ -9,6 +9,7 @@ namespace Application.Hubs
     public class ChatMessage
     {
         public string SenderId { get; set; }
+        public string SenderUserId { get; set; }
         public string SenderFullName { get; set; }
         public string Message { get; set; }
         public DateTime Date { get; set; }

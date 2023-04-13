@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,6 +37,7 @@ namespace Application.Hubs
                 SenderFullName = userName,
                 Date = DateTime.Now,
                 Message = message,
+                SenderUserId = user.Identities.First().Claims.FirstOrDefault(i=>i.Type == ClaimTypes.NameIdentifier).Value,
                 SenderId = Context.ConnectionId
             };
             messages.Add(chatMessage);
